@@ -1,20 +1,22 @@
-import { Component, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Calendar } from './calendar';
-import * as moment from 'moment';
-import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var calendar_1 = require("./calendar");
+var moment = require("moment");
+var animations_1 = require("@angular/animations");
 var DatepickerComponent = (function () {
     function DatepickerComponent(renderer, elementRef) {
         var _this = this;
         this.renderer = renderer;
         this.elementRef = elementRef;
         this.DEFAULT_FORMAT = 'YYYY-MM-DD';
-        this.dateChange = new EventEmitter();
+        this.dateChange = new core_1.EventEmitter();
         this.clearText = 'Clear';
         this.placeholder = 'Select a date';
         this.cancelText = 'Cancel';
         this.weekStart = 0;
-        this.onSelect = new EventEmitter();
+        this.onSelect = new core_1.EventEmitter();
         this.dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
         this.dateFormat = this.DEFAULT_FORMAT;
         this.showCalendar = false;
@@ -32,9 +34,9 @@ var DatepickerComponent = (function () {
             'August', 'September', 'October', 'November', ' December'
         ];
         this.clickListener = renderer.listenGlobal('document', 'click', function (event) { return _this.handleGlobalClick(event); });
-        this.yearControl = new FormControl('', Validators.compose([
-            Validators.required,
-            Validators.maxLength(4),
+        this.yearControl = new forms_1.FormControl('', forms_1.Validators.compose([
+            forms_1.Validators.required,
+            forms_1.Validators.maxLength(4),
             this.yearValidator,
             this.inRangeValidator.bind(this)
         ]));
@@ -84,7 +86,7 @@ var DatepickerComponent = (function () {
             throw Error("The weekStart is not in range between " + 0 + " and " + (this.dayNamesOrdered.length - 1));
         }
         else {
-            this.calendar = new Calendar(this.weekStart);
+            this.calendar = new calendar_1.Calendar(this.weekStart);
             this.dayNamesOrdered = this.dayNamesOrdered.slice(this.weekStart, this.dayNamesOrdered.length)
                 .concat(this.dayNamesOrdered.slice(0, this.weekStart));
         }
@@ -275,24 +277,23 @@ var DatepickerComponent = (function () {
     };
     return DatepickerComponent;
 }());
-export { DatepickerComponent };
 DatepickerComponent.decorators = [
-    { type: Component, args: [{
+    { type: core_1.Component, args: [{
                 selector: 'material-datepicker',
                 animations: [
-                    trigger('calendarAnimation', [
-                        transition('* => left', [
-                            animate(180, keyframes([
-                                style({ transform: 'translateX(105%)', offset: 0.5 }),
-                                style({ transform: 'translateX(-130%)', offset: 0.51 }),
-                                style({ transform: 'translateX(0)', offset: 1 })
+                    animations_1.trigger('calendarAnimation', [
+                        animations_1.transition('* => left', [
+                            animations_1.animate(180, animations_1.keyframes([
+                                animations_1.style({ transform: 'translateX(105%)', offset: 0.5 }),
+                                animations_1.style({ transform: 'translateX(-130%)', offset: 0.51 }),
+                                animations_1.style({ transform: 'translateX(0)', offset: 1 })
                             ]))
                         ]),
-                        transition('* => right', [
-                            animate(180, keyframes([
-                                style({ transform: 'translateX(-105%)', offset: 0.5 }),
-                                style({ transform: 'translateX(130%)', offset: 0.51 }),
-                                style({ transform: 'translateX(0)', offset: 1 })
+                        animations_1.transition('* => right', [
+                            animations_1.animate(180, animations_1.keyframes([
+                                animations_1.style({ transform: 'translateX(-105%)', offset: 0.5 }),
+                                animations_1.style({ transform: 'translateX(130%)', offset: 0.51 }),
+                                animations_1.style({ transform: 'translateX(0)', offset: 1 })
                             ]))
                         ])
                     ])
@@ -304,31 +305,32 @@ DatepickerComponent.decorators = [
             },] },
 ];
 DatepickerComponent.ctorParameters = function () { return [
-    { type: Renderer, },
-    { type: ElementRef, },
+    { type: core_1.Renderer, },
+    { type: core_1.ElementRef, },
 ]; };
 DatepickerComponent.propDecorators = {
-    'dateChange': [{ type: Output },],
-    'date': [{ type: Input },],
-    'disabled': [{ type: Input },],
-    'accentColor': [{ type: Input },],
-    'altInputStyle': [{ type: Input },],
-    'dateFormat': [{ type: Input },],
-    'fontFamily': [{ type: Input },],
-    'rangeStart': [{ type: Input },],
-    'rangeEnd': [{ type: Input },],
-    'canBeCleared': [{ type: Input },],
-    'clearText': [{ type: Input },],
-    'placeholder': [{ type: Input },],
-    'inputText': [{ type: Input },],
-    'showCalendar': [{ type: Input },],
-    'cancelText': [{ type: Input },],
-    'weekStart': [{ type: Input },],
-    'onSelect': [{ type: Output },],
-    'calendarDays': [{ type: Input },],
-    'currentMonth': [{ type: Input },],
-    'dayNames': [{ type: Input },],
-    'hoveredDay': [{ type: Input },],
-    'months': [{ type: Input },],
+    'dateChange': [{ type: core_1.Output },],
+    'date': [{ type: core_1.Input },],
+    'disabled': [{ type: core_1.Input },],
+    'accentColor': [{ type: core_1.Input },],
+    'altInputStyle': [{ type: core_1.Input },],
+    'dateFormat': [{ type: core_1.Input },],
+    'fontFamily': [{ type: core_1.Input },],
+    'rangeStart': [{ type: core_1.Input },],
+    'rangeEnd': [{ type: core_1.Input },],
+    'canBeCleared': [{ type: core_1.Input },],
+    'clearText': [{ type: core_1.Input },],
+    'placeholder': [{ type: core_1.Input },],
+    'inputText': [{ type: core_1.Input },],
+    'showCalendar': [{ type: core_1.Input },],
+    'cancelText': [{ type: core_1.Input },],
+    'weekStart': [{ type: core_1.Input },],
+    'onSelect': [{ type: core_1.Output },],
+    'calendarDays': [{ type: core_1.Input },],
+    'currentMonth': [{ type: core_1.Input },],
+    'dayNames': [{ type: core_1.Input },],
+    'hoveredDay': [{ type: core_1.Input },],
+    'months': [{ type: core_1.Input },],
 };
+exports.DatepickerComponent = DatepickerComponent;
 //# sourceMappingURL=datepicker.component.js.map

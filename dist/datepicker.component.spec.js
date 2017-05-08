@@ -1,16 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DatepickerComponent } from './datepicker.component';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var testing_1 = require("@angular/core/testing");
+var common_1 = require("@angular/common");
+var forms_1 = require("@angular/forms");
+var datepicker_component_1 = require("./datepicker.component");
 describe('DatepickerComponent', function () {
     var comp;
     var fixture;
     beforeEach(function () {
-        TestBed.configureTestingModule({
-            declarations: [DatepickerComponent],
-            imports: [CommonModule, FormsModule, ReactiveFormsModule],
+        testing_1.TestBed.configureTestingModule({
+            declarations: [datepicker_component_1.DatepickerComponent],
+            imports: [common_1.CommonModule, forms_1.FormsModule, forms_1.ReactiveFormsModule],
         });
-        fixture = TestBed.createComponent(DatepickerComponent);
+        fixture = testing_1.TestBed.createComponent(datepicker_component_1.DatepickerComponent);
         comp = fixture.componentInstance;
     });
     it('should create component', function () { return expect(comp).toBeDefined(); });
@@ -18,7 +20,7 @@ describe('DatepickerComponent', function () {
         var expectedError = { 'invalidYear': true };
         var testControl;
         beforeEach(function () {
-            testControl = new FormControl('');
+            testControl = new forms_1.FormControl('');
         });
         it('validates a valid year', function () {
             testControl.setValue(2015);
@@ -36,7 +38,7 @@ describe('DatepickerComponent', function () {
     describe('inRangeValidator', function () {
         var testControl;
         beforeEach(function () {
-            testControl = new FormControl('');
+            testControl = new forms_1.FormControl('');
         });
         it('returns error when currentMonthNumber is absent', function () {
             testControl.setValue(2015);

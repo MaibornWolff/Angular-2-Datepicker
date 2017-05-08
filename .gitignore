@@ -1,5 +1,4 @@
 **/*.js.map
-**/*.metadata.json
 **/*.ngfactory.*
 aot
 demo/**/*.js

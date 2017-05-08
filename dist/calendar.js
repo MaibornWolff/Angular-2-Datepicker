@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Calendar = (function () {
     function Calendar(firstWeekDay) {
         if (firstWeekDay === void 0) { firstWeekDay = 0; }
@@ -54,7 +56,7 @@ var Calendar = (function () {
     };
     return Calendar;
 }());
-export { Calendar };
+exports.Calendar = Calendar;
 var months = 'JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC'.split(' ');
 for (var i = 0; i < months.length; i++) {
     Calendar[months[i]] = i;

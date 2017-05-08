@@ -1,24 +1,26 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { AppComponent } from './app.component';
-import { DatepickerModule } from '../datepicker.module';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var forms_1 = require("@angular/forms");
+var app_component_1 = require("./app.component");
+var datepicker_module_1 = require("../datepicker.module");
 var AppModule = (function () {
     function AppModule() {
     }
     return AppModule;
 }());
-export { AppModule };
 AppModule.decorators = [
-    { type: NgModule, args: [{
+    { type: core_1.NgModule, args: [{
                 imports: [
-                    BrowserModule,
-                    DatepickerModule,
-                    FormsModule,
+                    platform_browser_1.BrowserModule,
+                    datepicker_module_1.DatepickerModule,
+                    forms_1.FormsModule,
                 ],
-                declarations: [AppComponent],
-                bootstrap: [AppComponent]
+                declarations: [app_component_1.AppComponent],
+                bootstrap: [app_component_1.AppComponent]
             },] },
 ];
 AppModule.ctorParameters = function () { return []; };
+exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map
