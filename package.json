@@ -19,8 +19,8 @@
     "@angular/platform-browser": "^4.1.1",
     "@angular/platform-browser-dynamic": "^4.1.1",
     "@angular/platform-server": "^4.1.1",
-    "@types/jasmine": "^2.5.47",
     "@types/core-js": "^0.9.41",
+    "@types/jasmine": "^2.5.47",
     "concurrently": "^3.0.0",
     "core-js": "^2.4.1",
     "jasmine-core": "^2.6.1",
@@ -37,12 +37,17 @@
     "typescript": "^2.3.2",
     "zone.js": "^0.8.10"
   },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/koleary94/Angular-2-Datepicker"
   },
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "prepublish": "npm run ngc",
     "lint": "tslint ./src/datepicker.*.ts -t verbose",
     "lite": "lite-server",
     "test": "tsc && karma start karma.conf.js",
@@ -51,6 +56,7 @@
     "ngc": "node_modules/.bin/ngc -p tsconfig-aot.json"
   },
   "dependencies": {
+    "@angular/animations": "^4.1.1",
     "moment": "^2.17.1",
     "rxjs": "^5.3.1"
   }

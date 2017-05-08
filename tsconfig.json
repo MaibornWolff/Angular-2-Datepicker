@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -7,12 +8,22 @@
       "es6",
       "dom"
     ],
+    "declaration": true,
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": true,
     "noImplicitAny": false
   },
-  "exclude": [ "node_modules", "**/*.ngfactory.*" ],
-  "types": ["jasmine" ]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.ngfactory.*",
+    "dist"
+  ],
+  "types": [
+    "jasmine"
+  ]
 }

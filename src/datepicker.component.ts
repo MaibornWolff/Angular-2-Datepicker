@@ -1,17 +1,25 @@
 import {
-  animate, Component, ElementRef, EventEmitter, Input, keyframes, OnChanges,
-  OnInit, Output, Renderer, SimpleChange, state, style, transition, trigger
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  Renderer,
+  SimpleChange
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import { Calendar } from './calendar';
 import * as moment from 'moment';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 
-interface DateFormatFunction {
+export interface DateFormatFunction {
   (date: Date): string;
 }
 
-interface ValidationResult {
+export interface ValidationResult {
   [key: string]: boolean;
 }
 
@@ -21,199 +29,198 @@ interface ValidationResult {
     trigger('calendarAnimation', [
       transition('* => left', [
         animate(180, keyframes([
-          style({ transform: 'translateX(105%)', offset: 0.5 }),
-          style({ transform: 'translateX(-130%)', offset: 0.51 }),
-          style({ transform: 'translateX(0)', offset: 1 })
+          style({transform: 'translateX(105%)', offset: 0.5}),
+          style({transform: 'translateX(-130%)', offset: 0.51}),
+          style({transform: 'translateX(0)', offset: 1})
         ]))
       ]),
       transition('* => right', [
         animate(180, keyframes([
-          style({ transform: 'translateX(-105%)', offset: 0.5 }),
-          style({ transform: 'translateX(130%)', offset: 0.51 }),
-          style({ transform: 'translateX(0)', offset: 1 })
+          style({transform: 'translateX(-105%)', offset: 0.5}),
+          style({transform: 'translateX(130%)', offset: 0.51}),
+          style({transform: 'translateX(0)', offset: 1})
         ]))
       ])
     ])
   ],
   styles: [
-    `.datepicker {
-        position: relative;
-        display: inline-block;
-        color: #2b2b2b;
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'Calibri', 'Roboto';
+      `.datepicker {
+          position: relative;
+          display: inline-block;
+          color: #2b2b2b;
+          font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'Calibri', 'Roboto';
       }
 
       .datepicker__calendar {
-        position: absolute;
-        overflow: hidden;
-        z-index: 1000;
-        top: 1.9em;
-        left: 0;
-        height: 23.8em;
-        width: 20.5em;
-        font-size: 14px;
-        background-color: #ffffff;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-        cursor: default;
-        -webkit-touch-callout: none;
+          position: absolute;
+          overflow: hidden;
+          z-index: 1000;
+          top: 1.9em;
+          left: 0;
+          height: 23.8em;
+          width: 20.5em;
+          font-size: 14px;
+          background-color: #ffffff;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+          cursor: default;
+          -webkit-touch-callout: none;
           -webkit-user-select: none;
-             -moz-user-select: none;
-              -ms-user-select: none;
-                  user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
       }
 
       .datepicker__calendar__cancel {
-        position: absolute;
-        bottom: 1em;
-        left: 1.8em;
-        color: #d8d8d8;
-        cursor: pointer;
-        -webkit-transition: 0.37s;
-        transition: 0.37s;
+          position: absolute;
+          bottom: 1em;
+          left: 1.8em;
+          color: #d8d8d8;
+          cursor: pointer;
+          -webkit-transition: 0.37s;
+          transition: 0.37s;
       }
 
       .datepicker__calendar__cancel:hover {
-        color: #b1b1b1;
+          color: #b1b1b1;
       }
 
       .datepicker__calendar__clear {
-        position: absolute;
-        bottom: 1em;
-        right: 1.8em;
-        color: #d8d8d8;
-        cursor: pointer;
-        -webkit-transition: 0.37s;
-        transition: 0.37s;
+          position: absolute;
+          bottom: 1em;
+          right: 1.8em;
+          color: #d8d8d8;
+          cursor: pointer;
+          -webkit-transition: 0.37s;
+          transition: 0.37s;
       }
 
       .datepicker__calendar__clear:hover {
-        color: #b1b1b1;
+          color: #b1b1b1;
       }
 
-
       .datepicker__calendar__content {
-        margin-top: 0.4em;
+          margin-top: 0.4em;
       }
 
       .datepicker__calendar__labels {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: center;
-           -ms-flex-pack: center;
-         justify-content: center;
-        width: 100%;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          width: 100%;
       }
 
       .datepicker__calendar__label {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        margin: 0 0.2em;
-        line-height: 2.2em;
-        text-align: center;
-        color: #d8d8d8;
+          display: inline-block;
+          width: 2.2em;
+          height: 2.2em;
+          margin: 0 0.2em;
+          line-height: 2.2em;
+          text-align: center;
+          color: #d8d8d8;
       }
 
       .datepicker__calendar__month {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-flow: wrap;
-            flex-flow: wrap;
-        -webkit-box-pack: center;
-           -ms-flex-pack: center;
-         justify-content: center;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-flow: wrap;
+          flex-flow: wrap;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
       }
 
       .datepicker__calendar__month__day {
-        display: inline-block;
-        width: 2.2em;
-        height: 2.2em;
-        margin: 0 0.2em 0.4em;
-        border-radius: 2.2em;
-        line-height: 2.2em;
-        text-align: center;
-        -webkit-transition: 0.37s;
-        transition: 0.37s;
+          display: inline-block;
+          width: 2.2em;
+          height: 2.2em;
+          margin: 0 0.2em 0.4em;
+          border-radius: 2.2em;
+          line-height: 2.2em;
+          text-align: center;
+          -webkit-transition: 0.37s;
+          transition: 0.37s;
       }
 
       .datepicker__calendar__nav {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: center;
-           -ms-flex-pack: center;
-         justify-content: center;
-        -webkit-box-align: center;
-           -ms-flex-align: center;
-              align-items: center;
-        height: 3em;
-        background-color: #fff;
-        border-bottom: 1px solid #e8e8e8;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          height: 3em;
+          background-color: #fff;
+          border-bottom: 1px solid #e8e8e8;
       }
 
       .datepicker__calendar__nav__arrow {
-        width: 0.8em;
-        height: 0.8em;
-        cursor: pointer;
-        -webkit-transition: 0.37s;
-        transition: 0.37s;
+          width: 0.8em;
+          height: 0.8em;
+          cursor: pointer;
+          -webkit-transition: 0.37s;
+          transition: 0.37s;
       }
 
       .datepicker__calendar__nav__arrow:hover {
-        -webkit-transform: scale(1.05);
-                transform: scale(1.05);
+          -webkit-transform: scale(1.05);
+          transform: scale(1.05);
       }
 
       .datepicker__calendar__nav__chevron {
-        fill: #bbbbbb;
-        -webkit-transition: 0.37s;
-        transition: 0.37s;
+          fill: #bbbbbb;
+          -webkit-transition: 0.37s;
+          transition: 0.37s;
       }
 
       .datepicker__calendar__nav__chevron:hover {
-        fill: #2b2b2b;
+          fill: #2b2b2b;
       }
 
       .datepicker__calendar__nav__header {
-        width: 11em;
-        margin: 0 1em;
-        text-align: center;
+          width: 11em;
+          margin: 0 1em;
+          text-align: center;
       }
 
       .datepicker__calendar__nav__header__form {
-        display: inline-block;
-        margin: 0;
+          display: inline-block;
+          margin: 0;
       }
 
       .datepicker__calendar__nav__header__year {
-        display: inline-block;
-        width: 3em;
-        padding: 2px 4px;
-        border: 1px solid #ffffff;
-        border-radius: 2px;
-        font-size: 1em;
-        transition: 0.32s;
+          display: inline-block;
+          width: 3em;
+          padding: 2px 4px;
+          border: 1px solid #ffffff;
+          border-radius: 2px;
+          font-size: 1em;
+          transition: 0.32s;
       }
 
       .datepicker__calendar__nav__header__year:focus.ng-invalid {
-        border: 1px solid #e82525;
+          border: 1px solid #e82525;
       }
 
       .datepicker__calendar__nav__header__year:focus.ng-valid {
-        border: 1px solid #13ad13;
+          border: 1px solid #13ad13;
       }
 
       .datepicker__calendar__nav__header__year:focus {
-        outline: none;
+          outline: none;
       }
 
       .datepicker__input {
-        outline: none;
-        border-radius: 0.1rem;
-        padding: .2em .6em;
-        font-size: 14px;
+          outline: none;
+          border-radius: 0.1rem;
+          padding: .2em .6em;
+          font-size: 14px;
       }
     `
   ],
@@ -242,18 +249,20 @@ interface ValidationResult {
             class="datepicker__calendar__nav__arrow"
             (click)="onArrowClick('left')"
           >
-          <svg class="datepicker__calendar__nav__chevron" x="0px" y="0px" viewBox="0 0 50 50">
-            <g>
-              <path d="M39.7,7.1c0.5,0.5,0.5,1.2,0,1.7L29,19.6c-0.5,0.5-1.2,1.2-1.7,1.7L16.5,32.1c-0.5,0.5-1.2,0.5-1.7,0l-2.3-2.3
+            <svg class="datepicker__calendar__nav__chevron" x="0px" y="0px" viewBox="0 0 50 50">
+              <g>
+                <path
+                  d="M39.7,7.1c0.5,0.5,0.5,1.2,0,1.7L29,19.6c-0.5,0.5-1.2,1.2-1.7,1.7L16.5,32.1c-0.5,0.5-1.2,0.5-1.7,0l-2.3-2.3
                     c-0.5-0.5-1.2-1.2-1.7-1.7l-2.3-2.3c-0.5-0.5-0.5-1.2,0-1.7l10.8-10.8c0.5-0.5,1.2-1.2,1.7-1.7L31.7,0.8c0.5-0.5,1.2-0.5,1.7,0
                     l2.3,2.3c0.5,0.5,1.2,1.2,1.7,1.7L39.7,7.1z"/>
-            </g>
-            <g>
-              <path d="M33.4,49c-0.5,0.5-1.2,0.5-1.7,0L20.9,38.2c-0.5-0.5-1.2-1.2-1.7-1.7L8.4,25.7c-0.5-0.5-0.5-1.2,0-1.7l2.3-2.3
+              </g>
+              <g>
+                <path
+                  d="M33.4,49c-0.5,0.5-1.2,0.5-1.7,0L20.9,38.2c-0.5-0.5-1.2-1.2-1.7-1.7L8.4,25.7c-0.5-0.5-0.5-1.2,0-1.7l2.3-2.3
                     c0.5-0.5,1.2-1.2,1.7-1.7l2.3-2.3c0.5-0.5,1.2-0.5,1.7,0l10.8,10.8c0.5,0.5,1.2,1.2,1.7,1.7l10.8,10.8c0.5,0.5,0.5,1.2,0,1.7
                     L37.4,45c-0.5,0.5-1.2,1.2-1.7,1.7L33.4,49z"/>
-            </g>
-          </svg>
+              </g>
+            </svg>
           </div>
           <div class="datepicker__calendar__nav__header">
             <span>{{ currentMonth }}</span>
@@ -272,12 +281,14 @@ interface ValidationResult {
           >
             <svg class="datepicker__calendar__nav__chevron" x="0px" y="0px" viewBox="0 0 50 50">
               <g>
-                <path d="M8.4,7.1c-0.5,0.5-0.5,1.2,0,1.7l10.8,10.8c0.5,0.5,1.2,1.2,1.7,1.7l10.8,10.8c0.5,0.5,1.2,0.5,1.7,0l2.3-2.3
+                <path
+                  d="M8.4,7.1c-0.5,0.5-0.5,1.2,0,1.7l10.8,10.8c0.5,0.5,1.2,1.2,1.7,1.7l10.8,10.8c0.5,0.5,1.2,0.5,1.7,0l2.3-2.3
                     c0.5-0.5,1.2-1.2,1.7-1.7l2.3-2.3c0.5-0.5,0.5-1.2,0-1.7L29,13.2c-0.5-0.5-1.2-1.2-1.7-1.7L16.5,0.8c-0.5-0.5-1.2-0.5-1.7,0
                     l-2.3,2.3c-0.5,0.5-1.2,1.2-1.7,1.7L8.4,7.1z"/>
               </g>
               <g>
-                <path d="M14.8,49c0.5,0.5,1.2,0.5,1.7,0l10.8-10.8c0.5-0.5,1.2-1.2,1.7-1.7l10.8-10.8c0.5-0.5,0.5-1.2,0-1.7l-2.3-2.3
+                <path
+                  d="M14.8,49c0.5,0.5,1.2,0.5,1.7,0l10.8-10.8c0.5-0.5,1.2-1.2,1.7-1.7l10.8-10.8c0.5-0.5,0.5-1.2,0-1.7l-2.3-2.3
                     c-0.5-0.5-1.2-1.2-1.7-1.7l-2.3-2.3c-0.5-0.5-1.2-0.5-1.7,0L20.9,28.5c-0.5,0.5-1.2,1.2-1.7,1.7L8.4,40.9c-0.5,0.5-0.5,1.2,0,1.7
                     l2.3,2.3c0.5,0.5,1.2,1.2,1.7,1.7L14.8,49z"/>
               </g>
@@ -332,7 +343,7 @@ interface ValidationResult {
         </div>
       </div>
     </div>
-    `
+  `
 })
 export class DatepickerComponent implements OnInit, OnChanges {
   private readonly DEFAULT_FORMAT = 'YYYY-MM-DD';
@@ -341,11 +352,15 @@ export class DatepickerComponent implements OnInit, OnChanges {
   // two way bindings
   @Output() dateChange = new EventEmitter<Date>();
 
-  @Input() get date(): Date { return this.dateVal; }
+  @Input() get date(): Date {
+    return this.dateVal;
+  }
+
   set date(val: Date) {
     this.dateVal = val;
     this.dateChange.emit(val);
   }
+
   // api bindings
   @Input() disabled: boolean;
   @Input() accentColor: string;
@@ -442,19 +457,19 @@ export class DatepickerComponent implements OnInit, OnChanges {
   // -------------------------------- State Management ------------------------------ //
   // -------------------------------------------------------------------------------- //
   /**
-  * Closes the calendar and syncs visual components with selected or current date.
-  * This way if a user opens the calendar with this month, scrolls to two months from now,
-  * closes the calendar, then reopens it, it will open with the current month
-  * or month associated with the selected date
-  */
+   * Closes the calendar and syncs visual components with selected or current date.
+   * This way if a user opens the calendar with this month, scrolls to two months from now,
+   * closes the calendar, then reopens it, it will open with the current month
+   * or month associated with the selected date
+   */
   closeCalendar(): void {
     this.showCalendar = false;
     this.syncVisualsWithDate();
   }
 
   /**
-  * Sets the date values associated with the ui
-  */
+   * Sets the date values associated with the ui
+   */
   private setCurrentValues(date: Date) {
     this.currentMonthNumber = date.getMonth();
     this.currentMonth = this.months[this.currentMonthNumber];
@@ -484,8 +499,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Visually syncs calendar and input to selected date or current day
-  */
+   * Visually syncs calendar and input to selected date or current day
+   */
   syncVisualsWithDate(): void {
     if (this.date) {
       this.setInputText(this.date);
@@ -497,8 +512,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Sets the currentMonth and creates new calendar days for the given month
-  */
+   * Sets the currentMonth and creates new calendar days for the given month
+   */
   setCurrentMonth(monthNumber: number): void {
     this.currentMonth = this.months[monthNumber];
     const calendarArray = this.calendar.monthDays(this.currentYear, this.currentMonthNumber);
@@ -507,16 +522,16 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Sets the currentYear and FormControl value associated with the year
-  */
+   * Sets the currentYear and FormControl value associated with the year
+   */
   setCurrentYear(year: number): void {
     this.currentYear = year;
     this.yearControl.setValue(year);
   }
 
   /**
-  * Sets the visible input text
-  */
+   * Sets the visible input text
+   */
   setInputText(date: Date): void {
     let inputText = '';
     const dateFormat: string | DateFormatFunction = this.dateFormat;
@@ -534,9 +549,9 @@ export class DatepickerComponent implements OnInit, OnChanges {
   // --------------------------------- Click Handlers ------------------------------- //
   // -------------------------------------------------------------------------------- //
   /**
-  * Sets the date values associated with the calendar.
-  * Triggers animation if the month changes
-  */
+   * Sets the date values associated with the calendar.
+   * Triggers animation if the month changes
+   */
   onArrowClick(direction: string): void {
     const currentMonth: number = this.currentMonthNumber;
     let newYear: number = this.currentYear;
@@ -582,7 +597,7 @@ export class DatepickerComponent implements OnInit, OnChanges {
    */
   isDateValid(date: Date): boolean {
     return (!this.rangeStart || date.getTime() >= this.rangeStart.getTime()) &&
-           (!this.rangeEnd || date.getTime() <= this.rangeEnd.getTime());
+      (!this.rangeEnd || date.getTime() <= this.rangeEnd.getTime());
   }
 
   /**
@@ -603,8 +618,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Closes the calendar when the cancel button is clicked
-  */
+   * Closes the calendar when the cancel button is clicked
+   */
   onCancel(): void {
     this.closeCalendar();
   }
@@ -619,15 +634,15 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Toggles the calendar when the date input is clicked
-  */
+   * Toggles the calendar when the date input is clicked
+   */
   onInputClick(): void {
     this.showCalendar = !this.showCalendar;
   }
 
   /**
-  * Returns the font color for a day
-  */
+   * Returns the font color for a day
+   */
   onSelectDay(day: Date): void {
     if (this.isDateValid(day)) {
       this.date = day;
@@ -637,9 +652,9 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Sets the current year and current month if the year from
-  * yearControl is valid
-  */
+   * Sets the current year and current month if the year from
+   * yearControl is valid
+   */
   onYearSubmit(): void {
     if (this.yearControl.valid && +this.yearControl.value !== this.currentYear) {
       this.setCurrentYear(+this.yearControl.value);
@@ -653,8 +668,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   // ----------------------------------- Listeners ---------------------------------- //
   // -------------------------------------------------------------------------------- //
   /**
-  * Closes the calendar if a click is not within the datepicker component
-  */
+   * Closes the calendar if a click is not within the datepicker component
+   */
   handleGlobalClick(event: MouseEvent): void {
     const withinElement = this.elementRef.nativeElement.contains(event.target);
     if (!this.elementRef.nativeElement.contains(event.target)) {
@@ -666,8 +681,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   // ----------------------------------- Helpers ------------------------------------ //
   // -------------------------------------------------------------------------------- //
   /**
-  * Returns the background color for a day
-  */
+   * Returns the background color for a day
+   */
   getDayBackgroundColor(day: Date): string {
     let color = this.colors['white'];
     if (this.isChosenDay(day)) {
@@ -679,8 +694,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Returns the font color for a day
-  */
+   * Returns the font color for a day
+   */
   getDayFontColor(day: Date): string {
     let color = this.colors['black'];
     if (this.isChosenDay(day)) {
@@ -690,8 +705,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Returns whether a day is the chosen day
-  */
+   * Returns whether a day is the chosen day
+   */
   isChosenDay(day: Date): boolean {
     if (day) {
       return this.date ? day.toDateString() === this.date.toDateString() : false;
@@ -701,8 +716,8 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Returns whether a day is the current calendar day
-  */
+   * Returns whether a day is the current calendar day
+   */
   isCurrentDay(day: Date): boolean {
     if (day) {
       return day.toDateString() === new Date().toDateString();
@@ -712,15 +727,15 @@ export class DatepickerComponent implements OnInit, OnChanges {
   }
 
   /**
-  * Returns whether a day is the day currently being hovered
-  */
+   * Returns whether a day is the day currently being hovered
+   */
   isHoveredDay(day: Date): boolean {
     return this.hoveredDay ? this.hoveredDay === day && !this.isChosenDay(day) : false;
   }
 
   /**
-  * Triggers an animation and resets to initial state after the duration of the animation
-  */
+   * Triggers an animation and resets to initial state after the duration of the animation
+   */
   triggerAnimation(direction: string): void {
     this.animate = direction;
     setTimeout(() => this.animate = 'reset', 185);
@@ -730,34 +745,34 @@ export class DatepickerComponent implements OnInit, OnChanges {
   // ---------------------------------- Validators ---------------------------------- //
   // -------------------------------------------------------------------------------- //
   /**
-  * Validates that a value is within the 'rangeStart' and/or 'rangeEnd' if specified
-  */
+   * Validates that a value is within the 'rangeStart' and/or 'rangeEnd' if specified
+   */
   inRangeValidator(control: FormControl): ValidationResult {
     const value = control.value;
 
     if (this.currentMonthNumber) {
       const tentativeDate = new Date(+value, this.currentMonthNumber);
       if (this.rangeStart && tentativeDate.getTime() < this.rangeStart.getTime()) {
-        return { 'yearBeforeRangeStart': true };
+        return {'yearBeforeRangeStart': true};
       }
       if (this.rangeEnd && tentativeDate.getTime() > this.rangeEnd.getTime()) {
-        return { 'yearAfterRangeEnd': true };
+        return {'yearAfterRangeEnd': true};
       }
       return null;
     }
 
-    return { 'currentMonthMissing': true };
+    return {'currentMonthMissing': true};
   }
 
   /**
-  * Validates that a value is a number greater than or equal to 1970
-  */
+   * Validates that a value is a number greater than or equal to 1970
+   */
   yearValidator(control: FormControl): ValidationResult {
     const value = control.value;
     const valid = !isNaN(value) && value >= 1970 && Math.floor(value) === +value;
     if (valid) {
       return null;
     }
-    return { 'invalidYear': true };
+    return {'invalidYear': true};
   }
 }

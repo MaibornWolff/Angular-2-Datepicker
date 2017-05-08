@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }   from './app.component';
-import { DatepickerModule } from '../src/datepicker.module';
+import { DatepickerModule } from '../datepicker.module';
 
 @NgModule({
   imports: [

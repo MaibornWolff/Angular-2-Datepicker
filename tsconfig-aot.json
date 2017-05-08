@@ -4,7 +4,6 @@
     "module": "es2015",
     "suppressImplicitAnyIndexErrors": true
   },
-
   "angularCompilerOptions": {
    "genDir": "aot",
    "skipMetadataEmit" : false
