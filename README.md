@@ -1,3 +1,5 @@
+OBSOLETE! Use https://material.angular.io/components/datepicker/overview
+
 # Angular 2 Material Datepicker
 
 [![Version](http://img.shields.io/npm/v/angular2-material-datepicker.svg)](https://www.npmjs.org/package/angular2-material-datepicker)
